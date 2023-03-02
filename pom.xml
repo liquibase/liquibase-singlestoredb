@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.liquibase.ext</groupId>
-    <artifactId>liquibase-singlestore</artifactId>
+    <artifactId>liquibase-singlestoredb</artifactId>
     <version>4.19.2-SNAPSHOT</version>
 
     <name>Liquibase Extension: SingleStoreDB support</name>
     <description>Add this Liquibase extension to your project to support SingleStoreDB</description>
-    <url>https://github.com/liquibase/liquibase-singlestore</url>
+    <url>https://github.com/liquibase/liquibase-singlestoredb</url>
 
     <organization>
         <name>Liquibase</name>
@@ -24,12 +24,12 @@
     </licenses>
 
     <issueManagement>
-        <url>https://github.com/liquibase/liquibase-singlestore/issues</url>
+        <url>https://github.com/liquibase/liquibase-singlestoredb/issues</url>
     </issueManagement>
 
     <scm>
-        <connection>scm:git:http://github.com/liquibase/liquibase-singlestore.git</connection>
-        <url>https://github.com/liquibase/liquibase-singlestore</url>
+        <connection>scm:git:http://github.com/liquibase/liquibase-singlestoredb.git</connection>
+        <url>https://github.com/liquibase/liquibase-singlestoredb</url>
         <tag>HEAD</tag>
     </scm>
 
