@@ -1,12 +1,17 @@
 package liquibase.ext.singlestoredb;
 
 import liquibase.database.DatabaseConnection;
+import liquibase.database.core.MySQLDatabase;
+import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.DatabaseException;
 
-public class SingleStoreDBDatabase extends liquibase.database.core.PostgresDatabase {
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-    public static final int PRIORITY_DEFAULT = 9999;
-    public static final String PRODUCT_NAME = "SingleStoreDB";
+public class SingleStoreDBDatabase extends MySQLDatabase {
+
+    public static final String PRODUCT_NAME = "SingleStore";
 
     public SingleStoreDBDatabase() {
 
@@ -19,27 +24,36 @@ public class SingleStoreDBDatabase extends liquibase.database.core.PostgresDatab
 
     @Override
     public String getDefaultDatabaseProductName() {
-        return "SingleStoreDB";
-    }
-
-    @Override
-    public Integer getDefaultPort() {
-        return 3306;
+        return PRODUCT_NAME;
     }
 
     @Override
     public int getPriority() {
-        return PRIORITY_DEFAULT;
+        return PRIORITY_DATABASE;
     }
 
     @Override
     public boolean isCorrectDatabaseImplementation(DatabaseConnection conn) throws DatabaseException {
+        if (conn.getDatabaseProductName().equals("MySQL")) {
+            try (Statement stmt = ((JdbcConnection) conn).createStatement();
+                 ResultSet rs = stmt.executeQuery("select @@memsql_version")) {
+                if (rs.next()) {
+                    if (!rs.getString(1).isEmpty()) {
+                        return true;
+                    }
+                }
+            } catch (SQLException e) {
+                return false;
+            }
+        }
         return PRODUCT_NAME.equalsIgnoreCase(conn.getDatabaseProductName());
     }
 
     @Override
     public String getDefaultDriver(String url) {
-        return "com.singlestore.jdbc.Driver";
+        if (url.startsWith("jdbc:singlestore")) {
+            return "com.singlestore.jdbc.Driver";
+        }
+        return super.getDefaultDriver(url);
     }
-
 }
