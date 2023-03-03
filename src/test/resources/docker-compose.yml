@@ -1,0 +1,17 @@
+version: '3.3'
+
+services:
+
+  singlestore:
+    platform: linux/x86_64
+    image: ghcr.io/singlestore-labs/singlestoredb-dev:latest
+    ports:
+      - "3306:3306"
+      - "8080:8080"
+      - "9000:9000"
+    restart: always
+    environment:
+      SINGLESTORE_LICENSE: "BGU3MjkxM2Y0YzIxNjQ0NWY4ZGNiZWI0ZjlkODhiMzdiAAAAAAAAAAAEAAAAAAAAACgwNgIZAPv2GiV6gtVUuPcKj39pcUrUD8CQhuJxewIZAJi072WFjLdCcXRUyzyZ2HYIvJwM/9ehKQ=="
+      ROOT_PASSWORD: LbRootPass1
+    volumes:
+      - "./singlestoredb-init.sql:/init.sql"

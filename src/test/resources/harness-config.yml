@@ -1,0 +1,11 @@
+inputFormat: xml
+context: testContext
+
+databasesUnderTest:
+  - name: singlestoredb
+    prefix: docker
+    version: 5.7
+    url: jdbc:singlestore://localhost:3306/lbcat
+#    url: jdbc:mysql://localhost:3306/lbcat
+    username: lbuser
+    password: LiquibasePass1
